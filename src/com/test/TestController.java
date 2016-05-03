@@ -4,15 +4,13 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 @Controller
 public class TestController {
 	
-	@Resource
-	private TestBean testBean;
-	
-	@Resource
-	private TestDao testDao;
+	int i = 0;
 	
 	@Resource
 	private MyThread myThread;
@@ -21,20 +19,16 @@ public class TestController {
 		System.out.println("execute TestController constructor");
 	}
 	
-	@RequestMapping("/start")
-	public void start(){
-		myThread.start();
-	}
-	
 	@RequestMapping("/test")
 	public void test(){
-		myThread.toString();
-	}
-	
-	
-	public void setTestBean(TestBean testBean) {
-		System.out.println("execute setTestBean");
-		this.testBean = testBean;
+		WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
+		GPSEquipManager manager = (GPSEquipManager) wac.getBean("GPSEquipManager");
+		
+		System.out.println(manager.size());
+		System.out.println(manager);
+		
+		manager.addEquip("" + i++, i+"");
+		
 	}
 	
 }
