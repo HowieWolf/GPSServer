@@ -1,4 +1,4 @@
-package old.out;
+package com.equip.out.cmd;
 
 public class DataFlag {
 	

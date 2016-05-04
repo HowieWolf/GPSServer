@@ -1,6 +1,8 @@
-package old.manager;
+package com.equip.manager;
 
 import java.util.HashMap;
+
+import com.equip.controller.GPSEquipment;
 
 public class EquipManager extends HashMap<String, GPSEquipment>{
 	

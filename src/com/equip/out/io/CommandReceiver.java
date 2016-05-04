@@ -1,4 +1,4 @@
-package old.out.cmd;
+package com.equip.out.io;
 
 import java.io.EOFException;
 import java.io.IOException;

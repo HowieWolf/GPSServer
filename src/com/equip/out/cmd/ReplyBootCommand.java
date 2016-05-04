@@ -1,9 +1,7 @@
-package old.out.model;
+package com.equip.out.cmd;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import old.out.DataFlag;
 
 public class ReplyBootCommand extends Command {
 

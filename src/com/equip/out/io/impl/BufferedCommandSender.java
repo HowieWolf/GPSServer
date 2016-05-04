@@ -1,10 +1,10 @@
-package old.out.cmd.impl;
+package com.equip.out.io.impl;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import old.out.cmd.CommandSender;
+import com.equip.out.io.CommandSender;
 
 public class BufferedCommandSender extends BufferedOutputStream implements CommandSender {
 

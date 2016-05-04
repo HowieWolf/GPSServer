@@ -8,9 +8,12 @@
 </head>
 <body>
 
-<button action="stop.do">启动</button>
-<form action="start.do">
+<form action="start.do" method="post">
 	<input type="submit" value="启动"/>
+</form>
+<br>
+<form action="stop.do" method="post">
+	<input type="submit" value="停止"/>
 </form>
 </body>
 </html>

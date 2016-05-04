@@ -1,13 +1,13 @@
-package old.out.cmd.impl;
+package com.equip.out.io.impl;
 
 import java.io.BufferedInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import old.out.DataFlag;
-import old.out.cmd.CommandReceiver;
-import old.out.model.Command;
+import com.equip.out.cmd.Command;
+import com.equip.out.cmd.DataFlag;
+import com.equip.out.io.CommandReceiver;
 
 public class BufferedCommandReceiver extends BufferedInputStream implements CommandReceiver{
 

@@ -1,4 +1,4 @@
-package old.out.model;
+package com.equip.out.cmd;
 
 public class Command {
 	

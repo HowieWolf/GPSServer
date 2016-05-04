@@ -1,4 +1,4 @@
-package old.manager;
+package com.equip.controller;
 
 import java.io.EOFException;
 import java.io.File;
@@ -10,16 +10,17 @@ import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import old.out.cmd.CommandReceiver;
-import old.out.cmd.CommandSender;
-import old.out.cmd.impl.BufferedCommandReceiver;
-import old.out.cmd.impl.BufferedCommandSender;
-import old.out.model.ReplyBootCommand;
+import org.springframework.web.context.ContextLoader;
+
+import com.equip.manager.EquipManager;
+import com.equip.out.cmd.ReplyBootCommand;
+import com.equip.out.io.CommandReceiver;
+import com.equip.out.io.CommandSender;
+import com.equip.out.io.impl.BufferedCommandReceiver;
+import com.equip.out.io.impl.BufferedCommandSender;
 
 public class GPSEquipment extends Thread {
 
-	private EquipManager manager;
-	
 	private Socket socket;
 	private CommandReceiver in;
 	private CommandSender out;
@@ -28,9 +29,8 @@ public class GPSEquipment extends Thread {
 
 	File log;
 
-	public GPSEquipment(Socket socket , EquipManager equips) throws IOException {
+	public GPSEquipment(Socket socket) throws IOException {
 		this.socket = socket;
-		this.manager = equips;
 		/*
 		 * System.out.println("服务器端口："+socket.getLocalPort());
 		 * System.out.println("客户端端口："+socket.getPort());
@@ -79,8 +79,8 @@ public class GPSEquipment extends Thread {
 			/**
 			 * 当客户端断开连接时，抛出该异常
 			 */
+			getEquipManager().deleteEquip(eId);
 			System.out.println("SocketException");
-			manager.deleteEquip(this.eId);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("IOException");
@@ -104,7 +104,7 @@ public class GPSEquipment extends Thread {
 		String cmd = in.readCommand();
 		String eId = cmd.split(",")[1];
 		this.seteId(eId);
-		manager.addEquip(this);
+		getEquipManager().addEquip(this);
 		String s = cmd + "----" + time.format(new Date());
 		System.out.println(s);
 		fOut.write((s + "\r\n").getBytes());
@@ -136,6 +136,10 @@ public class GPSEquipment extends Thread {
 
 	public void seteId(String eId) {
 		this.eId = eId;
+	}
+	
+	public EquipManager getEquipManager(){
+		return (EquipManager) ContextLoader.getCurrentWebApplicationContext().getBean("equipManager");
 	}
 
 }

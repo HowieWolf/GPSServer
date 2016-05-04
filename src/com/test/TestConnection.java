@@ -3,9 +3,9 @@ package com.test;
 import java.io.IOException;
 import java.net.Socket;
 
-import old.out.DataFlag;
-import old.out.cmd.impl.BufferedCommandReceiver;
-import old.out.cmd.impl.BufferedCommandSender;
+import com.equip.out.cmd.DataFlag;
+import com.equip.out.io.impl.BufferedCommandReceiver;
+import com.equip.out.io.impl.BufferedCommandSender;
 
 public class TestConnection {
 
