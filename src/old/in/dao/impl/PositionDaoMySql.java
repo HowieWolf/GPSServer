@@ -1,7 +1,8 @@
 package old.in.dao.impl;
 
+import com.model.Position;
+
 import old.in.dao.PositionDao;
-import old.in.model.Position;
 
 public class PositionDaoMySql implements PositionDao{
 

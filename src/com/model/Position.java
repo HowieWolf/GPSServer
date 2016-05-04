@@ -1,4 +1,4 @@
-package old.in.model;
+package com.model;
 
 public class Position {
 	

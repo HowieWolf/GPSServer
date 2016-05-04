@@ -1,6 +1,6 @@
 package old.in.dao;
 
-import old.in.model.Position;
+import com.model.Position;
 
 public interface PositionDao {
 
