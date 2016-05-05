@@ -13,6 +13,9 @@ import java.util.Date;
 import org.springframework.web.context.ContextLoader;
 
 import com.equip.manager.EquipManager;
+import com.equip.out.cmd.BootCommand;
+import com.equip.out.cmd.Command;
+import com.equip.out.cmd.CommandFactory;
 import com.equip.out.cmd.ReplyBootCommand;
 import com.equip.out.io.CommandReceiver;
 import com.equip.out.io.CommandSender;
@@ -24,8 +27,11 @@ public class GPSEquipment extends Thread {
 	private Socket socket;
 	private CommandReceiver in;
 	private CommandSender out;
-	
+
 	private String eId;
+
+	//保存当前的指令
+	private Command curCmd;
 
 	File log;
 
@@ -84,31 +90,33 @@ public class GPSEquipment extends Thread {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("IOException");
+		} finally {
+			try {
+				fOut.close();
+				out.close();
+				in.close();
+				System.out.println("close all stream");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-
-		try {
-			fOut.close();
-			out.close();
-			in.close();
-			System.out.println("close all stream");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 	private void receiveAndReplyBootData(FileOutputStream fOut, SimpleDateFormat time)
 			throws EOFException, IOException {
 		System.out.println("waiting for data!");
+		// 读取开机数据包
 		String cmd = in.readCommand();
-		String eId = cmd.split(",")[1];
-		this.seteId(eId);
+		curCmd = (BootCommand) CommandFactory.createCommand(cmd);
+		this.seteId(curCmd.getIMEI());
+		// 交给设备管理器，存放到容器中
 		getEquipManager().addEquip(this);
+		// 打印日志
 		String s = cmd + "----" + time.format(new Date());
 		System.out.println(s);
 		fOut.write((s + "\r\n").getBytes());
-
+		// 回复开机数据包
 		out.writeCommand(new ReplyBootCommand().toString());
 	}
 
@@ -137,8 +145,8 @@ public class GPSEquipment extends Thread {
 	public void seteId(String eId) {
 		this.eId = eId;
 	}
-	
-	public EquipManager getEquipManager(){
+
+	public EquipManager getEquipManager() {
 		return (EquipManager) ContextLoader.getCurrentWebApplicationContext().getBean("equipManager");
 	}
 

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.equip.out.cmd.Command;
-import com.equip.out.cmd.DataFlag;
 import com.equip.out.io.CommandReceiver;
 
 public class BufferedCommandReceiver extends BufferedInputStream implements CommandReceiver{
@@ -64,7 +63,7 @@ public class BufferedCommandReceiver extends BufferedInputStream implements Comm
 		for (int i = 0; i < 6; i++) {
 			end.append((char) this.read());
 		}
-		if (end.toString().equals(DataFlag.DATA_END)) {
+		if (end.toString().equals(Command.DATA_END)) {
 			flag = true;
 		}
 		return flag;
@@ -87,7 +86,7 @@ public class BufferedCommandReceiver extends BufferedInputStream implements Comm
 				for (int i = 0; i < 8; i++) {
 					start.append((char) this.read());
 				}
-				if (start.toString().equals(DataFlag.DATA_START)) {
+				if (start.toString().equals(Command.DATA_START)) {
 					flag = true;
 					break;
 				} else {

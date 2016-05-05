@@ -3,7 +3,7 @@ package com.test;
 import java.io.IOException;
 import java.net.Socket;
 
-import com.equip.out.cmd.DataFlag;
+import com.equip.out.cmd.Command;
 import com.equip.out.io.impl.BufferedCommandReceiver;
 import com.equip.out.io.impl.BufferedCommandSender;
 
@@ -13,18 +13,18 @@ public class TestConnection {
 	public static final String HOST = "localhost";
 
 	public static final String[] CMD = {
-			DataFlag.DATA_START
+			Command.DATA_START
 					+ "BOOT,867967020452449,17,20160426210303,460,01,1331,10679,89860112901300941700,92,,,,,CRCR----20160426210305"
-					+ DataFlag.DATA_END,
-			DataFlag.DATA_START
+					+ Command.DATA_END,
+					Command.DATA_START
 					+ "DEVICEINFO,867967020452449,18,iBabyGuardhttp,,201604151625,CRCR----20160426210307"
-					+ DataFlag.DATA_END,
-			DataFlag.DATA_START
+					+ Command.DATA_END,
+					Command.DATA_START
 					+ "POSITION,867967020452449,18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426210310,91,,,,,CRCR----20160426210313"
-					+ DataFlag.DATA_END,
-			DataFlag.DATA_START
+					+ Command.DATA_END,
+					Command.DATA_START
 					+ "HEART_D2S,867967020452449,19,VALID,NORMALPOWER,20160426210433,CRCR----20160426210435"
-					+ DataFlag.DATA_END };
+					+ Command.DATA_END };
 
 	public void run() {
 
