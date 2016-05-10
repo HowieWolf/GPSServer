@@ -7,13 +7,11 @@ public class CommandFactory {
 		if (cmd.startsWith(Command.POSITION)) {
 			command = new PositionCommand(cmd);
 		} else if (cmd.startsWith(Command.HEART)) {
-
+			command = new HeartCommand(cmd);
 		} else if (cmd.startsWith(Command.BOOT)) {
 			command = new BootCommand(cmd);
 		} else if (cmd.startsWith(Command.DEVICE_INFO)) {
 			command = new DeviceInfoCommand(cmd);
-		} else if (cmd.startsWith(Command.HEART)) {
-
 		}
 		return command;
 	}

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.equip.controller.GPSEquipment;
 
@@ -17,6 +18,8 @@ public class GPSServer extends Thread {
 	@Resource
 	ServerSocket serverSocket;
 
+	WebApplicationContext context;
+	
 	boolean working;
 
 	@Override
@@ -24,7 +27,8 @@ public class GPSServer extends Thread {
 		System.out.println("EquipServer is running , waiting for equip!");
 		while (working) {
 			try {
-				GPSEquipment equip = new GPSEquipment(serverSocket.accept());
+				GPSEquipment equip = (GPSEquipment) context.getBean("gpsEquipment");
+				equip.setSocket(serverSocket.accept());
 				equip.start();
 			} catch (SocketException e) {
 				System.out.println("start");
@@ -32,11 +36,14 @@ public class GPSServer extends Thread {
 			} catch (IOException e) {
 				System.out.println("start");
 				e.printStackTrace();
+			} finally{
+				stopServer();
 			}
 		}
 	}
 
 	public void startServer() {
+		context = ContextLoader.getCurrentWebApplicationContext();
 		this.start();
 		this.working = true;
 	}

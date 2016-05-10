@@ -12,6 +12,12 @@ public class Command {
 	public static final String DATA_END="DATAEND";
 	
 	/**
+	 * 数据包分隔符,数据项分隔符和查询参数分隔符
+	 */
+	public static final String SEPARATOR_DATA = ",";
+	public static final String SEPARATOR_ARG = "#";
+	
+	/**
 	 * 数据包类型
 	 */
 	public static final String BOOT="BOOT";
@@ -25,13 +31,6 @@ public class Command {
 	protected String IMEI;
 	protected String dateTime;
 	protected String CRC;
-	
-	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
-	}
 	
 	public String getDataType() {
 		return dataType;

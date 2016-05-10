@@ -13,8 +13,8 @@ public class ReplyBootCommand extends Command {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		String reply = Command.DATA_START + "," + Command.REPLY_BOOT + "," + this.dateTime + ","
-				+ this.CRC + "," + Command.DATA_END;
+		String reply = Command.DATA_START + Command.SEPARATOR_DATA + Command.REPLY_BOOT + "," + this.dateTime + ","
+				+ "CRCR" + Command.SEPARATOR_DATA + Command.DATA_END;
 		return reply;
 	}
 

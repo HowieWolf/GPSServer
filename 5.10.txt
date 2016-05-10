@@ -1,0 +1,10 @@
+调试阶段的问题
+model的Position类中speed暂时设置0
+
+
+
+整合mybatis和spring
+
+在spring中配置数据源和sessionfactory
+dao继承SqlSessionDaoSupport,添加tx包
+加包aop

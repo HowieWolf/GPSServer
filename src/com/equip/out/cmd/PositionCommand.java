@@ -48,18 +48,19 @@ public class PositionCommand extends Command {
 		String[] datas = cmd.split(",");
 		this.dataType = Command.POSITION;
 		this.IMEI = datas[1];
-		this.MCC = Integer.parseInt(datas[2]);
-		this.MNC = Integer.parseInt(datas[3]);
-		this.LAC = Integer.parseInt(datas[4]);
-		this.CI = Integer.parseInt(datas[5]);
-		this.locateType = Integer.parseInt(datas[6]);
-		this.lng = formateLngAndLat(datas[7]);
-		this.lat = formateLngAndLat(datas[8]);
+		this.MCC = Integer.parseInt(datas[3]);
+		this.MNC = Integer.parseInt(datas[4]);
+		this.LAC = Integer.parseInt(datas[5]);
+		this.CI = Integer.parseInt(datas[6]);
+		this.locateType = Integer.parseInt(datas[7]);
+		this.lng = formateLngAndLat(datas[8]);
+		this.lat = formateLngAndLat(datas[9]);
 		//海拔、速度、精度等尚未设置
 		//其中某个参数可能为空
-		this.dateTime = datas[13];
-		this.battery = Integer.parseInt(datas[14]);
-		this.CRC = datas[19];
+		this.speed=0;
+		this.dateTime = datas[14];
+		this.battery = Integer.parseInt(datas[15]);
+		this.CRC = datas[20];
 	}
 	
 	public double formateLngAndLat(String arg){
@@ -74,6 +75,40 @@ public class PositionCommand extends Command {
 		m = Double.parseDouble(arg.substring(arg.length()-9));
 		l = d+m/60;
 		return l;
+	}
+	
+	@Override
+	public String toString() {
+		String cmd = "定位数据包";
+		return cmd;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public int getBattery() {
+		return battery;
+	}
+
+	public void setBattery(int battery) {
+		this.battery = battery;
+	}
+	
+	public double getSpeed() {
+		return speed;
 	}
 	
 

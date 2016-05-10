@@ -10,8 +10,13 @@ import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.annotation.Resource;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.context.ContextLoader;
 
+import com.equip.in.service.DataPackageService;
 import com.equip.manager.EquipManager;
 import com.equip.out.cmd.BootCommand;
 import com.equip.out.cmd.Command;
@@ -22,6 +27,8 @@ import com.equip.out.io.CommandSender;
 import com.equip.out.io.impl.BufferedCommandReceiver;
 import com.equip.out.io.impl.BufferedCommandSender;
 
+@Scope("prototype")
+@Repository("gpsEquipment")
 public class GPSEquipment extends Thread {
 
 	private Socket socket;
@@ -30,22 +37,16 @@ public class GPSEquipment extends Thread {
 
 	private String eId;
 
-	//保存当前的指令
+	@Resource(name = "dataPackageService")
+	private DataPackageService service;
+
+	// 保存当前的指令
 	private Command curCmd;
 
 	File log;
-
-	public GPSEquipment(Socket socket) throws IOException {
-		this.socket = socket;
-		/*
-		 * System.out.println("服务器端口："+socket.getLocalPort());
-		 * System.out.println("客户端端口："+socket.getPort());
-		 * System.out.println("InetAddress："+socket.getInetAddress());
-		 * System.out.println("RemoteAddress："+socket.getRemoteSocketAddress());
-		 * System.out.println("LocalAddress："+socket.getLocalAddress());
-		 */
-		in = new BufferedCommandReceiver(socket.getInputStream());
-		out = new BufferedCommandSender(socket.getOutputStream());
+	
+	public GPSEquipment() {
+		System.out.println("GPSEquipment  "+this.getId());
 	}
 
 	@Override
@@ -72,6 +73,7 @@ public class GPSEquipment extends Thread {
 			for (;;) {
 				System.out.println("waiting for data!");
 				cmd = in.readCommand();
+				service.handleDataPackage(CommandFactory.createCommand(cmd));
 				s = cmd + "----" + time.format(new Date());
 				System.out.println(s);
 				fOut.write((s + "\r\n").getBytes());
@@ -85,12 +87,12 @@ public class GPSEquipment extends Thread {
 			/**
 			 * 当客户端断开连接时，抛出该异常
 			 */
-			getEquipManager().deleteEquip(eId);
 			System.out.println("SocketException");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("IOException");
 		} finally {
+			getEquipManager().deleteEquip(eId);
 			try {
 				fOut.close();
 				out.close();
@@ -112,12 +114,15 @@ public class GPSEquipment extends Thread {
 		this.seteId(curCmd.getIMEI());
 		// 交给设备管理器，存放到容器中
 		getEquipManager().addEquip(this);
+		service.handleDataPackage(curCmd);
 		// 打印日志
 		String s = cmd + "----" + time.format(new Date());
 		System.out.println(s);
 		fOut.write((s + "\r\n").getBytes());
 		// 回复开机数据包
-		out.writeCommand(new ReplyBootCommand().toString());
+		String reply = new ReplyBootCommand().toString();
+		System.out.println(reply);
+		out.writeCommand(reply+reply);
 	}
 
 	private FileOutputStream createLog(FileOutputStream fOut) {
@@ -150,4 +155,9 @@ public class GPSEquipment extends Thread {
 		return (EquipManager) ContextLoader.getCurrentWebApplicationContext().getBean("equipManager");
 	}
 
+	public void setSocket(Socket socket) throws IOException {
+		this.socket = socket;
+		in = new BufferedCommandReceiver(socket.getInputStream());
+		out = new BufferedCommandSender(socket.getOutputStream());
+	}
 }
