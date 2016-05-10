@@ -8,6 +8,8 @@ public interface PositionDao {
 
 	public void addPosition(Position pos);
 	
-	public List<Position> queryPosition();
+	public Position queryPosition(String eId);
+	
+	public List<Position> queryPositions(String eId);
 	
 }

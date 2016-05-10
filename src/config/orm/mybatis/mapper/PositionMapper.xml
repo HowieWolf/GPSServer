@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{dateTime},#{lat},#{lng},#{speed},#{eId})
 	</insert>
 
-	<select id="selectPosition" resultType="Position">
-		select * from position
+	<select id="selectAllPosition" resultType="Position">
+		select * from position where eId = #{eId}
 	</select>
 </mapper>

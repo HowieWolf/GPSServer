@@ -18,10 +18,6 @@ public class DataPackageServiceImpl implements DataPackageService {
 
 	@Resource
 	PositionDao positionDao;
-
-	public DataPackageServiceImpl() {
-		System.out.println("DataPackageService"+this.hashCode());
-	}
 	
 	@Override
 	public void handleDataPackage(Command cmd) {
