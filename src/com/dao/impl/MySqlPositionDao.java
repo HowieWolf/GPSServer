@@ -23,13 +23,13 @@ public class MySqlPositionDao extends SqlSessionDaoSupport implements PositionDa
 	@Override
 	public Position queryPosition(String eId) {
 		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectOne("selectCurrentPosition" , eId);
 	}
 
 	@Override
 	public List<Position> queryPositions(String eId) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectList("selectAllPosition" , eId);
+		return getSqlSession().selectList("selectPreviousPosition" , eId);
 	}
 	
 	

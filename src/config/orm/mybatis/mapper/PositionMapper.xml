@@ -7,10 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="addPosition" useGeneratedKeys="true" keyProperty="id">
 		insert into position (time,lat,lng,speed,eId)
-		values (#{dateTime},#{lat},#{lng},#{speed},#{eId})
+		values (#{time},#{lat},#{lng},#{speed},#{eId})
 	</insert>
 
-	<select id="selectAllPosition" resultType="Position">
+	<select id="selectPreviousPosition" resultType="Position">
 		select * from position where eId = #{eId}
+	</select>
+	
+	<select id="selectCurrentPosition" resultType="Position">
+		select * from position where eId = #{eId} order by time desc limit 1
 	</select>
 </mapper>

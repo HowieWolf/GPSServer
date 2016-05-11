@@ -8,7 +8,7 @@ import com.equip.controller.GPSEquipment;
 
 @Repository
 public class EquipManager extends HashMap<String, GPSEquipment>{
-
+	
 	public void addEquip(GPSEquipment equip){
 		this.put(equip.geteId(), equip);
 		System.out.println("addEquip" + this.size());

@@ -29,7 +29,7 @@ public class BootCommand extends Command {
 
 		this.dataType = Command.BOOT;
 		this.IMEI = datas[1];
-		this.dateTime = datas[3];
+		this.time = datas[3];
 		this.MCC = Integer.parseInt(datas[4]);
 		this.MNC = Integer.parseInt(datas[5]);
 		this.LAC = Integer.parseInt(datas[6]);

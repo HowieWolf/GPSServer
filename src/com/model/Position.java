@@ -5,7 +5,7 @@ import com.equip.out.cmd.PositionCommand;
 public class Position {
 	
 	private int id;
-	private String dateTime;
+	private String time;
 	private double lat;
 	private double lng;
 	private double speed;
@@ -14,7 +14,7 @@ public class Position {
 	public Position() {}
 	
 	public Position(PositionCommand posCmd) {
-		this.dateTime = posCmd.getDateTime();
+		this.time = posCmd.getTime();
 		this.lat = posCmd.getLat();
 		this.lng = posCmd.getLng();
 		this.speed = posCmd.getSpeed();
@@ -29,12 +29,12 @@ public class Position {
 		this.id = id;
 	}
 
-	public String getDateTime() {
-		return dateTime;
+	public String getTime() {
+		return time;
 	}
 
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	public double getLat() {

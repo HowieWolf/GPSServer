@@ -24,8 +24,8 @@ public class GPSServer extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("EquipServer is running , waiting for equip!");
 		while (working) {
+			System.out.println("EquipServer is running , waiting for equip!");
 			try {
 				GPSEquipment equip = (GPSEquipment) context.getBean("gpsEquipment");
 				equip.setSocket(serverSocket.accept());
@@ -36,10 +36,9 @@ public class GPSServer extends Thread {
 			} catch (IOException e) {
 				System.out.println("start");
 				e.printStackTrace();
-			} finally{
-				stopServer();
 			}
 		}
+		stopServer();
 	}
 
 	public void startServer() {

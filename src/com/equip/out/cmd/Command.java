@@ -29,7 +29,7 @@ public class Command {
 	
 	protected String dataType;
 	protected String IMEI;
-	protected String dateTime;
+	protected String time;
 	protected String CRC;
 	
 	public String getDataType() {
@@ -48,12 +48,12 @@ public class Command {
 		IMEI = iMEI;
 	}
 
-	public String getDateTime() {
-		return dateTime;
+	public String getTime() {
+		return time;
 	}
 
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	public String getCRC() {

@@ -8,5 +8,5 @@ public interface CommandReceiver {
 	
 	public String readCommand() throws EOFException, SocketException ,IOException ;
 
-	public void close() throws IOException;
+	//public void close() throws IOException;
 }

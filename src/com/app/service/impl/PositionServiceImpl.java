@@ -19,7 +19,7 @@ public class PositionServiceImpl implements PositionService{
 	@Override
 	public Position getCurPosition(String eId) {
 		// TODO Auto-generated method stub
-		return null;
+		return positionDao.queryPosition(eId);
 	}
 
 	@Override

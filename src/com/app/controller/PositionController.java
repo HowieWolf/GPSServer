@@ -20,17 +20,15 @@ public class PositionController {
 	
 	@RequestMapping("/curPos")
 	public void currentPosition(String eId , HttpServletRequest req , HttpServletResponse res){
-		
-		
-		
+		eId = "867967020452449";
+		Position curPos = positionService.getCurPosition(eId);
+		req.setAttribute("curPos", curPos);
 	}
 	
 	@RequestMapping("/prePos")
 	public void previousPosition(String eId , HttpServletRequest req , HttpServletResponse res){
-		
 		eId = "867967020452449";
 		List<Position> prePos = positionService.getPrePositions(eId);
-		System.out.println(prePos);
 		req.setAttribute("prePos", prePos);
 	}
 	

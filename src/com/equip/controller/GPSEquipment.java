@@ -1,5 +1,7 @@
 package com.equip.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,8 +53,6 @@ public class GPSEquipment extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("a equip has connected!");
-		// TODO Auto-generated method stub
 		FileOutputStream fOut = null;
 		fOut = createLog(fOut);
 
@@ -95,8 +95,8 @@ public class GPSEquipment extends Thread {
 			getEquipManager().deleteEquip(eId);
 			try {
 				fOut.close();
-				out.close();
-				in.close();
+				((BufferedOutputStream)out).close();
+				((BufferedInputStream)in).close();
 				System.out.println("close all stream");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

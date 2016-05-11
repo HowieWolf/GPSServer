@@ -58,7 +58,7 @@ public class PositionCommand extends Command {
 		//海拔、速度、精度等尚未设置
 		//其中某个参数可能为空
 		this.speed=0;
-		this.dateTime = datas[14];
+		this.time = datas[14];
 		this.battery = Integer.parseInt(datas[15]);
 		this.CRC = datas[20];
 	}

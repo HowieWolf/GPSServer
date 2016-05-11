@@ -7,13 +7,13 @@ public class ReplyBootCommand extends Command {
 
 	public ReplyBootCommand() {
 		// TODO Auto-generated constructor stub
-		this.dateTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		this.time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		String reply = Command.DATA_START + Command.SEPARATOR_DATA + Command.REPLY_BOOT + "," + this.dateTime + ","
+		String reply = Command.DATA_START + Command.SEPARATOR_DATA + Command.REPLY_BOOT + "," + this.time + ","
 				+ "CRCR" + Command.SEPARATOR_DATA + Command.DATA_END;
 		return reply;
 	}

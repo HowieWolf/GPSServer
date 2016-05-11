@@ -96,4 +96,12 @@ public class BufferedCommandReceiver extends BufferedInputStream implements Comm
 			}
 		}
 	}
+	
+	public int read() throws EOFException ,IOException{
+		int c = super.read();
+		if(c == -1){
+			throw new EOFException();
+		}
+		return c;
+	}
 }
