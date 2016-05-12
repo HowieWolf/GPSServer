@@ -122,7 +122,7 @@ public class GPSEquipment extends Thread {
 		// 回复开机数据包
 		String reply = new ReplyBootCommand().toString();
 		System.out.println(reply);
-		out.writeCommand(reply+reply);
+		out.writeCommand(reply);
 	}
 
 	private FileOutputStream createLog(FileOutputStream fOut) {

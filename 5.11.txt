@@ -1,3 +1,14 @@
 修改了所有时间名，由dateTime变为time
 
 修复当链接断开后无限发送-1（结束标志位）无法抛异常的错误，重写BufferedCommandReceiver的read方法
+
+查历史轨迹时，返回的List<Position>是按时间倒序排列的，最后一次的位置index为0
+
+学习：
+使用springmvc处理json
+（1）添加jar
+jackson-annotations-2.7.4.jar
+jackson-core-2.7.4.jar
+jackson-databind-2.7.4.jar
+（2）在springmvc中配置converter
+（3）在controller的方法中使用注解@RequestBody，方法直接返回对象就可以

@@ -3,33 +3,40 @@ package com.app.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.service.PositionService;
 import com.model.Position;
 
+@RequestMapping("/position")
 @Controller
 public class PositionController {
 
 	@Resource
 	PositionService positionService;
 	
-	@RequestMapping("/curPos")
-	public void currentPosition(String eId , HttpServletRequest req , HttpServletResponse res){
+	@RequestMapping("/current")
+	@ResponseBody
+	public Position currentPosition(String eId){
 		eId = "867967020452449";
 		Position curPos = positionService.getCurPosition(eId);
-		req.setAttribute("curPos", curPos);
+		System.out.println(curPos);
+		return curPos;
 	}
 	
-	@RequestMapping("/prePos")
-	public void previousPosition(String eId , HttpServletRequest req , HttpServletResponse res){
+	@RequestMapping("/previous")
+	@ResponseBody
+	public List<Position> previousPosition(String eId){
 		eId = "867967020452449";
 		List<Position> prePos = positionService.getPrePositions(eId);
-		req.setAttribute("prePos", prePos);
+		int size = prePos.size();
+		for(int i=0;i<size ; i++){
+			System.out.println(prePos.get(i));
+		}
+		return prePos;
 	}
 	
 }

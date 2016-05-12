@@ -11,8 +11,8 @@ import com.equip.out.io.impl.BufferedCommandSender;
 
 public class TestConnection extends Thread{
 
-	// public static final String HOST = "123.206.30.177";
-	public static final String HOST = "localhost";
+	public static final String HOST = "123.206.30.177";
+	// public static final String HOST = "localhost";
 	
 	private String IMIE = "86796702045244";
 	
@@ -29,13 +29,13 @@ public class TestConnection extends Thread{
 				+ "DEVICEINFO,"+IMIE+",18,iBabyGuardhttp,,201604151625,CRCR" + Command.SEPARATOR_DATA
 				+ Command.DATA_END,
 				Command.DATA_START + Command.SEPARATOR_DATA
-				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426210410,91,,,,,CRCR"
+				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426211410,91,,,,,CRCR"
 				+ Command.SEPARATOR_DATA + Command.DATA_END,
 				Command.DATA_START + Command.SEPARATOR_DATA
-				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426210510,91,,,,,CRCR"
+				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426211510,91,,,,,CRCR"
 				+ Command.SEPARATOR_DATA + Command.DATA_END,
 				Command.DATA_START + Command.SEPARATOR_DATA
-				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426210610,91,,,,,CRCR"
+				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426211610,91,,,,,CRCR"
 				+ Command.SEPARATOR_DATA + Command.DATA_END,
 				Command.DATA_START + Command.SEPARATOR_DATA
 				+ "HEART_D2S,"+IMIE+",19,VALID,NORMALPOWER,20160426210433,CRCR" + Command.SEPARATOR_DATA
@@ -83,7 +83,7 @@ public class TestConnection extends Thread{
 	}
 
 	public static void main(String[] args) {
-		for(int i = 8 ; i<10 ; i++){
+		for(int i = 9 ; i<10 ; i++){
 			new TestConnection(i).start();
 			try {
 				Thread.sleep(2000);

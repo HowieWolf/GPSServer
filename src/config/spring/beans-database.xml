@@ -14,7 +14,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/xiaoxing" />
 		<property name="username" value="root" />
-		<property name="password" value="01478520" />
+		<property name="password" value="howie" />
 	</bean>
 
 	<!-- 配置工厂 -->

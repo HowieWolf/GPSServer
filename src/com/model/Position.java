@@ -2,7 +2,7 @@ package com.model;
 
 import com.equip.out.cmd.PositionCommand;
 
-public class Position {
+public class Position{
 	
 	private int id;
 	private String time;
@@ -19,6 +19,12 @@ public class Position {
 		this.lng = posCmd.getLng();
 		this.speed = posCmd.getSpeed();
 		this.eId = posCmd.getIMEI();
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Position[id:"+id+"][time:"+time+"][lat:"+lat+"][lng:"+lng+"][speed:"+speed+"][eId:"+eId+"]";
 	}
 
 	public int getId() {
