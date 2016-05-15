@@ -1,6 +1,6 @@
 package com.model;
 
-import com.equip.out.cmd.PositionCommand;
+import com.equip.out.cmd.receive.PositionCommand;
 
 public class Position{
 	

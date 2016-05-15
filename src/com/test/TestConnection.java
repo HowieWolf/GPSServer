@@ -11,8 +11,8 @@ import com.equip.out.io.impl.BufferedCommandSender;
 
 public class TestConnection extends Thread{
 
-	public static final String HOST = "123.206.30.177";
-	// public static final String HOST = "localhost";
+	//public static final String HOST = "123.206.30.177";
+	public static final String HOST = "localhost";
 	
 	private String IMIE = "86796702045244";
 	
@@ -54,20 +54,17 @@ public class TestConnection extends Thread{
 			out = new BufferedCommandSender(socket.getOutputStream());
 			out.write(CMD[0].getBytes());
 			out.flush();
-			System.out.println(in.readCommand());
-			System.out.println("data has been received");
-			for (int i = 1; i < CMD.length; i++) {
-				out.write(CMD[i].getBytes());
-				out.flush();
-				System.out.println("data has been sent");
 
-				Thread.sleep(6000);
+			for (int i = 1; i < 5; i++) {
+				/*out.write(CMD[i].getBytes());
+				out.flush();
+				System.out.println("data has been sent");*/
+				System.out.println(in.readCommand());
+				System.out.println("data has been received");
+				//Thread.sleep(6000);
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

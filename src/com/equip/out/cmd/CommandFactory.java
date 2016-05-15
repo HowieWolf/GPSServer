@@ -1,8 +1,13 @@
 package com.equip.out.cmd;
 
+import com.equip.out.cmd.receive.BootCommand;
+import com.equip.out.cmd.receive.DeviceInfoCommand;
+import com.equip.out.cmd.receive.HeartCommand;
+import com.equip.out.cmd.receive.PositionCommand;
+
 public class CommandFactory {
 
-	public static Command createCommand(String cmd) {
+	public Command createCommand(String cmd) {
 		Command command = null;
 		if (cmd.startsWith(Command.POSITION)) {
 			command = new PositionCommand(cmd);

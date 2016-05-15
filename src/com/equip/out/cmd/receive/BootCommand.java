@@ -1,4 +1,6 @@
-package com.equip.out.cmd;
+package com.equip.out.cmd.receive;
+
+import com.equip.out.cmd.Command;
 
 public class BootCommand extends Command {
 
@@ -42,7 +44,7 @@ public class BootCommand extends Command {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return super.toString();
+		return "开机[ID:" + this.IMEI + "][时间：" + this.time + "][电量：" + this.battery + "]";
 	}
 
 	public int getMCC() {

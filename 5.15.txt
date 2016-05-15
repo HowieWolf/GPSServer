@@ -1,0 +1,6 @@
+优化了Command类及其子类
+Command新增content属性，记录除数据开始结束标志位、数据类型、数据IMEI之外的内容，默认为空字符串
+Command的toCommand方法是生成命令字符串
+子类重写该方法，只需要setContent，在调用父类的toCommand即可
+
+实现吃药提醒、地理围栏

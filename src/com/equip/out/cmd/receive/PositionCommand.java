@@ -1,4 +1,6 @@
-package com.equip.out.cmd;
+package com.equip.out.cmd.receive;
+
+import com.equip.out.cmd.Command;
 
 public class PositionCommand extends Command {
 
@@ -13,27 +15,29 @@ public class PositionCommand extends Command {
 	// LAC(location area code)位置区码 范围[0000,FFFF]十六进制
 	protected int LAC;
 
-	//定位性质：0，开机定位。1，实时GPS 定位。2，补传。3，GPS 定位失败，GPS 数据位空字符。4，当GPS 未定位，GSM基站定位
+	// 定位性质：0，开机定位。1，实时GPS 定位。2，补传。3，GPS 定位失败，GPS 数据位空字符。4，当GPS 未定位，GSM基站定位
 	protected int locateType;
-	
+
 	public static final int LOCATE_BOOT = 0;
-	public static final int GPS_LOCATE_GPS = 1;
+	public static final int LOCATE_GPS = 1;
 	public static final int LOCATE_SUPPLY = 2;
 	public static final int LOCATE_FAIL = 3;
-	public static final int GSM_LOCATE_GSM = 4;
-	
-	//经纬度
+	public static final int LOCATE_GSM = 4;
+
+	private String[] locate = { "开机定位", "GPS", "补传", "未定位", "GSM" };
+
+	// 经纬度
 	protected double lng;
 	protected double lat;
-	//海拔
+	// 海拔
 	protected double alititude;
-	//精度
+	// 精度
 	protected double accuracy;
-	//方位角
+	// 方位角
 	protected double course;
-	//速度
+	// 速度
 	protected double speed;
-	
+
 	// 电池电量
 	protected int battery;
 
@@ -43,8 +47,9 @@ public class PositionCommand extends Command {
 	protected String remark4;
 
 	public PositionCommand(String cmd) {
-		//数据类型，设备标识，MCC,MNC,LAC,Cell ID，定位性质，Lng, Lat,alititude,accuracy,Course,Speed,Time，电量百分比，remark1，remark2，remark3，remark4，CRC校验，数据结束
-		//,,99.99,65522,0,20160426210310,91,,,,,CRCR----20160426210313
+		// 数据类型，设备标识，MCC,MNC,LAC,Cell ID，定位性质，Lng,
+		// Lat,alititude,accuracy,Course,Speed,Time，电量百分比，remark1，remark2，remark3，remark4，CRC校验，数据结束
+		// ,,99.99,65522,0,20160426210310,91,,,,,CRCR----20160426210313
 		String[] datas = cmd.split(",");
 		this.dataType = Command.POSITION;
 		this.IMEI = datas[1];
@@ -55,31 +60,32 @@ public class PositionCommand extends Command {
 		this.locateType = Integer.parseInt(datas[7]);
 		this.lng = formateLngAndLat(datas[8]);
 		this.lat = formateLngAndLat(datas[9]);
-		//海拔、速度、精度等尚未设置
-		//其中某个参数可能为空
-		this.speed=0;
+		// 海拔、速度、精度等尚未设置
+		// 其中某个参数可能为空
+		this.speed = 0;
 		this.time = datas[14];
 		this.battery = Integer.parseInt(datas[15]);
 		this.CRC = datas[20];
 	}
-	
-	public double formateLngAndLat(String arg){
-		//如果尚未定位，则返回0
-		if(arg.equals("EWX")|| arg.equals("NSX")){
+
+	public double formateLngAndLat(String arg) {
+		// 如果尚未定位，则返回0
+		if (arg.equals("EWX") || arg.equals("NSX")) {
 			return 0;
 		}
 		double l = 0;
 		int d = 0;
 		double m = 0;
-		d = Integer.parseInt(arg.substring(1, arg.length()-9));
-		m = Double.parseDouble(arg.substring(arg.length()-9));
-		l = d+m/60;
+		d = Integer.parseInt(arg.substring(1, arg.length() - 9));
+		m = Double.parseDouble(arg.substring(arg.length() - 9));
+		l = d + m / 60;
 		return l;
 	}
-	
+
 	@Override
 	public String toString() {
-		String cmd = "定位数据包";
+		String cmd = "定位[ID:" + this.IMEI + "][时间：" + this.time + "][电量：" + this.battery + "][定位类型："
+				+ locate[this.locateType] + "][经度：" + this.lng + "][纬度：" + this.lat + "]";
 		return cmd;
 	}
 
@@ -106,10 +112,9 @@ public class PositionCommand extends Command {
 	public void setBattery(int battery) {
 		this.battery = battery;
 	}
-	
+
 	public double getSpeed() {
 		return speed;
 	}
-	
 
 }

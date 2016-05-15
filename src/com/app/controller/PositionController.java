@@ -23,7 +23,6 @@ public class PositionController {
 	public Position currentPosition(String eId){
 		eId = "867967020452449";
 		Position curPos = positionService.getCurPosition(eId);
-		System.out.println(curPos);
 		return curPos;
 	}
 	
@@ -33,8 +32,8 @@ public class PositionController {
 		eId = "867967020452449";
 		List<Position> prePos = positionService.getPrePositions(eId);
 		int size = prePos.size();
-		for(int i=0;i<size ; i++){
-			System.out.println(prePos.get(i));
+		if(size == 0 || size == 1) {
+			return null;
 		}
 		return prePos;
 	}

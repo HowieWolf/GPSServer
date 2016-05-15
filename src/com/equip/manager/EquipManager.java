@@ -14,6 +14,10 @@ public class EquipManager extends HashMap<String, GPSEquipment>{
 		System.out.println("addEquip" + this.size());
 	}
 	
+	public GPSEquipment getEquip(String eId){
+		return this.get(eId);
+	}
+	
 	public void deleteEquip(String eId){
 		this.remove(eId);
 		System.out.println("deleteEquip" + this.size());
