@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,12 +8,9 @@
 </head>
 <body>
 
-<form action="start.do" method="post">
-	<input type="submit" value="启动"/>
-</form>
-<br>
-<form action="stop.do" method="post">
-	<input type="submit" value="停止"/>
-</form>
+	<form action="admin/login.do" method="post">
+		管理员密码 <input type="password" name="pwd"><br> <input
+			type="submit" value="进入" />
+	</form>
 </body>
 </html>

@@ -27,6 +27,8 @@ public class Command {
 	public static final String REPLY_BOOT = "REPLYBOOT";
 	public static final String ALERT = "ALERT_S2D";
 	public static final String SEND_MESSAGE = "SENDMSM";
+	public static final String SET = "SET";
+	public static final String GET = "GET";
 
 	protected String dataType;
 	protected String IMEI;
@@ -34,6 +36,16 @@ public class Command {
 	protected String content = "";
 	protected String CRC = "CRCR";
 
+	public Command() {}
+	
+	public Command(String cmd){
+		String[] s = cmd.split(",");
+		this.dataType=s[0];
+		this.IMEI = s[1];
+		this.CRC=s[s.length-1];
+		this.content = cmd.substring(this.dataType.length()+this.IMEI.length()+2, cmd.length()-this.CRC.length()-1);
+	}
+	
 	public String toCommand() {
 		StringBuffer cmd = new StringBuffer(
 				Command.DATA_START + Command.SEPARATOR_DATA + this.dataType + Command.SEPARATOR_DATA);
@@ -48,6 +60,10 @@ public class Command {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getContent() {
+		return content;
 	}
 
 	public String getDataType() {

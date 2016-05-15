@@ -23,7 +23,9 @@ import com.equip.manager.EquipManager;
 import com.equip.out.cmd.Command;
 import com.equip.out.cmd.CommandFactory;
 import com.equip.out.cmd.receive.BootCommand;
-import com.equip.out.cmd.reply.ReplyBootCommand;
+import com.equip.out.cmd.receive.DeviceInfoCommand;
+import com.equip.out.cmd.receive.HeartCommand;
+import com.equip.out.cmd.receive.PositionCommand;
 import com.equip.out.io.CommandReceiver;
 import com.equip.out.io.CommandSender;
 import com.equip.out.io.impl.BufferedCommandReceiver;
@@ -36,24 +38,23 @@ public class GPSEquipment extends Thread {
 	private Socket socket;
 	private CommandReceiver in;
 	private CommandSender out;
-	
+
 	private CommandFactory factory;
 
 	private String eId;
 
+	private boolean power;
+
 	@Resource(name = "dataPackageService")
 	private DataPackageService service;
 
-	// 保存当前的指令
-	private Command curCmd;
-
 	File log;
-	
+
 	public GPSEquipment() {
 		// TODO Auto-generated constructor stub
 		factory = new CommandFactory();
 	}
-	
+
 	@Override
 	public void run() {
 		FileOutputStream fOut = null;
@@ -63,21 +64,30 @@ public class GPSEquipment extends Thread {
 
 		try {
 
-			/**
-			 * 链接后第一条数据一定是开机数据包
-			 */
-			String cmd;
-			String s;
-			receiveAndReplyBootData(fOut, time);
+			System.out.println("waiting for data!");
+			Command cmd = factory.createCommand(in.readCommand());
 
-			/**
-			 * 接收正常的定位数据包和其他数据包
-			 */
 			for (;;) {
 				System.out.println("waiting for data!");
-				cmd = in.readCommand();
-				service.handleDataPackage(factory.createCommand(cmd));
-				s = cmd + "----" + time.format(new Date());
+				cmd = factory.createCommand(in.readCommand());
+
+				if (cmd.getDataType().equals(Command.POSITION)) {
+					service.handlePosition((PositionCommand) cmd);
+				} else if (cmd.getDataType().equals(Command.HEART)) {
+					service.handleHeart((HeartCommand) cmd);
+				} else if (cmd.getDataType().equals(Command.BOOT) && !power) {
+					this.power = true;
+					this.seteId(cmd.getIMEI());
+					// 交给设备管理器，存放到容器中
+					getEquipManager().addEquip(this);
+					service.handleBoot((BootCommand) cmd, out);
+				} else if (cmd.getDataType().equals(Command.DEVICE_INFO)) {
+					service.handleDeviceInfo((DeviceInfoCommand) cmd);
+				} else {
+					service.handleCommand(cmd);
+				}
+
+				String s = cmd + "----" + time.format(new Date());
 				fOut.write((s + "\r\n").getBytes());
 			}
 		} catch (EOFException e) {
@@ -95,10 +105,11 @@ public class GPSEquipment extends Thread {
 			System.out.println("IOException");
 		} finally {
 			getEquipManager().deleteEquip(eId);
+			this.power = false;
 			try {
 				fOut.close();
-				((BufferedOutputStream)out).close();
-				((BufferedInputStream)in).close();
+				((BufferedOutputStream) out).close();
+				((BufferedInputStream) in).close();
 				System.out.println("close all stream");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -107,7 +118,7 @@ public class GPSEquipment extends Thread {
 		}
 	}
 
-	public void sendCommand(Command cmd){
+	public void sendCommand(Command cmd) {
 		try {
 			out.writeCommand(cmd.toCommand());
 		} catch (IOException e) {
@@ -115,23 +126,11 @@ public class GPSEquipment extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
-	private void receiveAndReplyBootData(FileOutputStream fOut, SimpleDateFormat time)
-			throws EOFException, IOException {
-		System.out.println("waiting for data!");
-		// 读取开机数据包
-		String cmd = in.readCommand();
-		curCmd = (BootCommand) factory.createCommand(cmd);
-		this.seteId(curCmd.getIMEI());
-		// 交给设备管理器，存放到容器中
-		getEquipManager().addEquip(this);
-		service.handleDataPackage(curCmd);
-		// 打印日志
-		String s = cmd + "----" + time.format(new Date());
-		fOut.write((s + "\r\n").getBytes());
-		// 回复开机数据包
-		String reply = new ReplyBootCommand().toCommand();
-		out.writeCommand(reply+reply);
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Equip:" + this.eId + "----" + socket.getRemoteSocketAddress();
 	}
 
 	private FileOutputStream createLog(FileOutputStream fOut) {

@@ -20,7 +20,10 @@ public class EquipServiceImpl implements EquipService{
 	public void handleAlertMedicine(String eId) {
 		// TODO Auto-generated method stub
 		GPSEquipment equip = manager.getEquip(eId);
-		equip.sendCommand(new AlertCommand(eId));
+		AlertCommand cmd = new AlertCommand(eId);
+		equip.sendCommand(cmd);
+		System.out.println("向"+eId+"发出警报信号！");
+		System.out.println(cmd.toCommand());
 	}
 
 	@Override
@@ -30,7 +33,10 @@ public class EquipServiceImpl implements EquipService{
 		String phone = "15302098366";
 		GPSEquipment equip = manager.getEquip(eId);
 		equip.sendCommand(new AlertCommand(eId));
-		equip.sendCommand(new SendMessageCommand(phone , msg));
+		SendMessageCommand cmd = new SendMessageCommand(phone , msg);
+		equip.sendCommand(cmd);
+		System.out.println("向"+eId+"发出给"+phone+"发送短信["+msg+"]的信号！");
+		System.out.println(cmd.toCommand());
 	}
 
 }

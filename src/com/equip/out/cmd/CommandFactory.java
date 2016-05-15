@@ -17,6 +17,8 @@ public class CommandFactory {
 			command = new BootCommand(cmd);
 		} else if (cmd.startsWith(Command.DEVICE_INFO)) {
 			command = new DeviceInfoCommand(cmd);
+		} else{
+			command = new Command(cmd);
 		}
 		return command;
 	}
