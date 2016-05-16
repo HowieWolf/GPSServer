@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -30,6 +31,8 @@ import com.equip.out.io.CommandReceiver;
 import com.equip.out.io.CommandSender;
 import com.equip.out.io.impl.BufferedCommandReceiver;
 import com.equip.out.io.impl.BufferedCommandSender;
+import com.model.Equipment;
+import com.model.Rail;
 
 @Scope("prototype")
 @Repository("gpsEquipment")
@@ -40,8 +43,9 @@ public class GPSEquipment extends Thread {
 	private CommandSender out;
 
 	private CommandFactory factory;
-
-	private String eId;
+	
+	private Equipment equip;
+	private ArrayList<Rail> rails;
 
 	private boolean power;
 
@@ -53,6 +57,8 @@ public class GPSEquipment extends Thread {
 	public GPSEquipment() {
 		// TODO Auto-generated constructor stub
 		factory = new CommandFactory();
+		equip = new Equipment();
+		rails = new ArrayList<>();
 	}
 
 	@Override
@@ -64,23 +70,22 @@ public class GPSEquipment extends Thread {
 
 		try {
 
-			System.out.println("waiting for data!");
-			Command cmd = factory.createCommand(in.readCommand());
+			Command cmd = null;
 
 			for (;;) {
 				System.out.println("waiting for data!");
 				cmd = factory.createCommand(in.readCommand());
 
 				if (cmd.getDataType().equals(Command.POSITION)) {
-					service.handlePosition((PositionCommand) cmd);
+					service.handlePosition((PositionCommand) cmd , rails);
 				} else if (cmd.getDataType().equals(Command.HEART)) {
 					service.handleHeart((HeartCommand) cmd);
 				} else if (cmd.getDataType().equals(Command.BOOT) && !power) {
 					this.power = true;
-					this.seteId(cmd.getIMEI());
+					equip.setId(cmd.getIMEI());
 					// 交给设备管理器，存放到容器中
 					getEquipManager().addEquip(this);
-					service.handleBoot((BootCommand) cmd, out);
+					service.handleBoot((BootCommand) cmd, out , equip , rails);
 				} else if (cmd.getDataType().equals(Command.DEVICE_INFO)) {
 					service.handleDeviceInfo((DeviceInfoCommand) cmd);
 				} else {
@@ -104,7 +109,7 @@ public class GPSEquipment extends Thread {
 			// TODO Auto-generated catch block
 			System.out.println("IOException");
 		} finally {
-			getEquipManager().deleteEquip(eId);
+			getEquipManager().deleteEquip(equip.getId());
 			this.power = false;
 			try {
 				fOut.close();
@@ -130,7 +135,7 @@ public class GPSEquipment extends Thread {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Equip:" + this.eId + "----" + socket.getRemoteSocketAddress();
+		return "Equip:" + equip.getId() + "----" + socket.getRemoteSocketAddress();
 	}
 
 	private FileOutputStream createLog(FileOutputStream fOut) {
@@ -151,12 +156,12 @@ public class GPSEquipment extends Thread {
 		return fOut;
 	}
 
-	public String geteId() {
-		return eId;
+	public Equipment getInfo(){
+		return equip;
 	}
-
-	public void seteId(String eId) {
-		this.eId = eId;
+	
+	public void addRail(Rail r){
+		this.rails.add(r);
 	}
 
 	public EquipManager getEquipManager() {

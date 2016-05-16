@@ -9,6 +9,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	<mappers>
 		<mapper resource="config/orm/mybatis/mapper/PositionMapper.xml" />
+		<mapper resource="config/orm/mybatis/mapper/EquipMapper.xml" />
+		<mapper resource="config/orm/mybatis/mapper/RailMapper.xml" />
 		<!-- <mapper resource="config/orm/mybatis/mapper/UserMapper.xml" /> -->
 	</mappers>
 </configuration>

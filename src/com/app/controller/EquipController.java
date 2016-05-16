@@ -4,8 +4,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.service.EquipService;
+import com.app.service.impl.EquipServiceImpl;
 import com.test.TestEquip;
 
 @RequestMapping("/equip")
@@ -16,15 +18,23 @@ public class EquipController {
 	private EquipService equipService;
 	
 	@RequestMapping("/alertMedicine")
-	public void alertMedicine(String eId){
+	@ResponseBody
+	public String alertMedicine(String eId){
 		eId = TestEquip.IMIE;
-		equipService.handleAlertMedicine(eId);
+		if(equipService.handleAlertMedicine(eId)){
+			return "success";
+		}
+		return "fail";
 	}
 	
 	@RequestMapping("/leaveSecurity")
-	public void leaveSecurity(String eId){
+	@ResponseBody
+	public String leaveSecurity(String eId , String phone){
 		eId= TestEquip.IMIE;
-		equipService.handleAwaySecurity(eId);
+		if(((EquipServiceImpl)equipService).handleAwaySecurity(eId , phone)){
+			return "success";
+		}
+		return "fail";
 	}
 	
 }

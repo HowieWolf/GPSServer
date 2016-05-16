@@ -10,7 +10,7 @@ import com.equip.controller.GPSEquipment;
 public class EquipManager extends HashMap<String, GPSEquipment>{
 	
 	public void addEquip(GPSEquipment equip){
-		this.put(equip.geteId(), equip);
+		this.put(equip.getInfo().getId(), equip);
 		System.out.println("addEquip" + this.size());
 	}
 	
@@ -24,7 +24,7 @@ public class EquipManager extends HashMap<String, GPSEquipment>{
 	}
 	
 	public void deleteEquip(GPSEquipment equip){
-		this.remove(equip.geteId());
+		this.remove(equip.getInfo().getId());
 		System.out.println("deleteEquip" + this.size());
 	}
 	

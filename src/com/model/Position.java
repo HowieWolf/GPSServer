@@ -2,17 +2,19 @@ package com.model;
 
 import com.equip.out.cmd.receive.PositionCommand;
 
-public class Position{
-	
+public class Position {
+
 	private int id;
 	private String time;
 	private double lat;
 	private double lng;
 	private double speed;
 	private String eId;
-	
-	public Position() {}
-	
+	private boolean inRail = true;
+
+	public Position() {
+	}
+
 	public Position(PositionCommand posCmd) {
 		this.time = posCmd.getTime();
 		this.lat = posCmd.getLat();
@@ -20,11 +22,12 @@ public class Position{
 		this.speed = posCmd.getSpeed();
 		this.eId = posCmd.getIMEI();
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Position[id:"+id+"][time:"+time+"][lat:"+lat+"][lng:"+lng+"][speed:"+speed+"][eId:"+eId+"]";
+		return "Position[id:" + id + "][time:" + time + "][lat:" + lat + "][lng:" + lng + "][speed:" + speed + "][eId:"
+				+ eId + "]";
 	}
 
 	public int getId() {
@@ -74,7 +77,13 @@ public class Position{
 	public void seteId(String eId) {
 		this.eId = eId;
 	}
-	
-	
+
+	public void setInRail(boolean inRail) {
+		this.inRail = inRail;
+	}
+
+	public boolean isInRail() {
+		return inRail;
+	}
 
 }

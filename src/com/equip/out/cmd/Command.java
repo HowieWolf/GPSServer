@@ -26,7 +26,7 @@ public class Command {
 	public static final String HEART = "HEART_D2S";
 	public static final String REPLY_BOOT = "REPLYBOOT";
 	public static final String ALERT = "ALERT_S2D";
-	public static final String SEND_MESSAGE = "SENDMSM";
+	public static final String SEND_MESSAGE = "SENDSMS";
 	public static final String SET = "SET";
 	public static final String GET = "GET";
 

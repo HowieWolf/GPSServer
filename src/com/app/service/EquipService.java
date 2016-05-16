@@ -2,8 +2,8 @@ package com.app.service;
 
 public interface EquipService {
 
-	public void handleAlertMedicine(String eId);
+	public boolean handleAlertMedicine(String eId);
 	
-	public void handleAwaySecurity(String eId);
+	public boolean handleAwaySecurity(String eId);
 	
 }
