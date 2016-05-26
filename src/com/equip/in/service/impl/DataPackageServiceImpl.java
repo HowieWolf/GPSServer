@@ -65,7 +65,7 @@ public class DataPackageServiceImpl implements DataPackageService {
 		String reply = new ReplyBootCommand().toCommand();
 		sender.writeCommand(reply);
 
-		Equipment e = equipmentDao.queryEquip(equip.getId());
+		Equipment e = equipmentDao.queryEquipById(equip.getId());
 		if (e == null) {
 			equipmentDao.addEquip(equip);
 		} else {

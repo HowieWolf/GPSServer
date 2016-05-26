@@ -1,5 +1,7 @@
 package com.dao.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -16,11 +18,27 @@ public class MySqlEquipmentDao extends SqlSessionDaoSupport implements Equipment
 	public void addEquip(Equipment equip) {
 		getSqlSession().insert("addEquip" , equip);
 	}
+	
+	@Override
+	public void updateEquip(Equipment equip) {
+		getSqlSession().update("updateEquip", equip);
+	}
+	
+	@Override
+	public void updateEquip(String id) {
+		getSqlSession().update("updateEquipOnlyUid", id);
+	}
 
 	@Override
-	public Equipment queryEquip(String id) {
+	public Equipment queryEquipById(String id) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectOne("selectEquip" , id);
+		return getSqlSession().selectOne("selectEquipById" , id);
+	}
+	
+	@Override
+	public List<Equipment> queryEquipsByUid(int uId) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectList("selectEquipByUid", uId);
 	}
 
 	@Resource

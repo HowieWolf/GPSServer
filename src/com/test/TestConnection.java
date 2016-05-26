@@ -25,21 +25,21 @@ public class TestConnection extends Thread{
 				Command.DATA_START + Command.SEPARATOR_DATA
 				+ "BOOT,"+IMIE+",17,20160426210303,460,01,1331,10679,89860112901300941700,92,,,,,CRCR"
 				+ Command.SEPARATOR_DATA + Command.DATA_END,
-				Command.DATA_START + Command.SEPARATOR_DATA
+				/*Command.DATA_START + Command.SEPARATOR_DATA
 				+ "DEVICEINFO,"+IMIE+",18,iBabyGuardhttp,,201604151625,CRCR" + Command.SEPARATOR_DATA
-				+ Command.DATA_END,
+				+ Command.DATA_END,*/
 				Command.DATA_START + Command.SEPARATOR_DATA
 				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426211410,91,,,,,CRCR"
 				+ Command.SEPARATOR_DATA + Command.DATA_END,
 				Command.DATA_START + Command.SEPARATOR_DATA
 				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426211510,91,,,,,CRCR"
-				+ Command.SEPARATOR_DATA + Command.DATA_END,
+				+ Command.SEPARATOR_DATA + Command.DATA_END/*,
 				Command.DATA_START + Command.SEPARATOR_DATA
 				+ "POSITION,"+IMIE+",18,460,01,1331,10679,4,E11702.563500,N3914.475660,,99.99,65522,0,20160426211610,91,,,,,CRCR"
 				+ Command.SEPARATOR_DATA + Command.DATA_END,
 				Command.DATA_START + Command.SEPARATOR_DATA
 				+ "HEART_D2S,"+IMIE+",19,VALID,NORMALPOWER,20160426210433,CRCR" + Command.SEPARATOR_DATA
-				+ Command.DATA_END };
+				+ Command.DATA_END */};
 		this.CMD = CMD;
 	}
 	
@@ -55,16 +55,16 @@ public class TestConnection extends Thread{
 			out.write(CMD[0].getBytes());
 			out.flush();
 
+			System.out.println(in.readCommand());
+			System.out.println("data has been received");
 			for (int i = 1; i < 5; i++) {
-				/*out.write(CMD[i].getBytes());
+				out.write(CMD[i].getBytes());
 				out.flush();
-				System.out.println("data has been sent");*/
-				System.out.println(in.readCommand());
-				System.out.println("data has been received");
-				//Thread.sleep(6000);
+				System.out.println("data has been sent");
+				Thread.sleep(5000);
 			}
 
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

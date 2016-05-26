@@ -1,4 +1,4 @@
-package com.equip.controller;
+package com.test;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -22,29 +22,21 @@ import com.model.User;
 @Controller
 public class TestMyBatis {
 
-	@Resource(name = "railDao")
-	RailDao dao;
 	
-	
-	@RequestMapping("/rail")
-	@ResponseBody
-	public List<Rail> query(String id){
-		return dao.queryRails(id);
-	}
+	SqlSession session;
 	
 	public static void main(String[] args) throws IOException {
 		
+		TestMyBatis test = new TestMyBatis();
+		test.connecteDatabase();
+		
+		
+	}
+
+	public void connecteDatabase() throws IOException {
 		Reader reader = Resources.getResourceAsReader("config/orm/mybatis/mybatisConfig.xml");
 		SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
-		
-		SqlSession session = sessionFactory.openSession();
-		List<User> users = new ArrayList(session.selectList("selectPosition"));
-		System.out.println(users.size());
-		for(int i = 0; i < users.size() ; i++){
-			System.out.println(users.get(i));
-		}
-		
-		
+		session = sessionFactory.openSession();
 	}
 	
 }

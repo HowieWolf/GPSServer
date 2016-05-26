@@ -10,9 +10,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{id},#{phone},#{name},#{uId})
 	</insert>
 
-	<select id="selectEquip" resultType="Equipment">
+	<update id="updateEquip">
+		update equipment
+		set
+		name = #{name},
+		phone = #{phone},
+		uId = #{uId}
+		where id = #{id}
+	</update>
+	
+	<update id="updateEquipOnlyUid">
+		update equipment
+		set
+		uId = 0
+		where id = #{id}
+	</update>
+
+	<select id="selectEquipById" resultType="Equipment">
 		select * from equipment
 		where id = #{id}
 	</select>
-	
+
+	<select id="selectEquipByUid" resultType="Equipment">
+		select * from equipment
+		where uId = #{uId} order by id
+	</select>
+
 </mapper>

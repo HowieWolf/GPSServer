@@ -29,10 +29,22 @@ public class Rail {
 	 * @return
 	 */
 	public boolean isAwayRail(double lat, double lng) {
-		//这里应该进行经纬度与米之间的换算
+		// 这里应该进行经纬度与米之间的换算
+
 		if (Math.pow(Math.pow(lat - this.lat, 2) + Math.pow(lng - this.lng, 2), 0.5) < radius) {
 			return false;
 		}
+
+		/*
+		 * CoordinateConverter converter = new CoordinateConverter();
+		 * converter.from(CoordType.GPS); // sourceLatLng待转换坐标
+		 * converter.coord(new LatLng(this.lat, this.lng)); LatLng p1 =
+		 * converter.convert(); converter.coord(new LatLng(lat, lng)); LatLng p2
+		 * = converter.convert();
+		 * 
+		 * if (DistanceUtil.getDistance(new LatLng(this.lat, this.lng), new
+		 * LatLng(lat, lng)) < radius) { return false; }
+		 */
 		return true;
 	}
 

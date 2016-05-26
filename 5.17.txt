@@ -1,0 +1,6 @@
+MySQL导入导出
+mysqldump -uusername -ppassword dabname > file.sql(cmd环境）
+source file.sql(MySQL cmd）
+
+问题
+实际距离不能直接使用俩经纬度点之间的距离来代表

@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.app.service.impl.SettingService;
+import com.app.service.SettingService;
 import com.model.Rail;
 
 @RequestMapping("/setting")
