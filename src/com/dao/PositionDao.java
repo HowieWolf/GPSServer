@@ -12,4 +12,6 @@ public interface PositionDao {
 	
 	public List<Position> queryPositions(String eId);
 	
+	public void updatePosition(Position pos);
+	
 }

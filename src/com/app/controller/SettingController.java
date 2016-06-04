@@ -1,9 +1,12 @@
 package com.app.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.service.SettingService;
 import com.model.Rail;
@@ -19,8 +22,19 @@ public class SettingController {
 	 * 设置围栏
 	 */
 	@RequestMapping("/addRail")
-	public void addRail(String eId , double lat , double lng , double radius){
+	@ResponseBody
+	public boolean addRail(String eId , double lat , double lng , double radius){
 		settingService.addRail(new Rail(eId, lat, lng, radius));
+		return true;
+	}
+	
+	/**
+	 * 获取某设备的围栏
+	 */
+	@RequestMapping("/getEquipRail")
+	@ResponseBody
+	public List<Rail> getEquipRail(String eId){
+		return settingService.getEquipRail(eId);
 	}
 	
 }

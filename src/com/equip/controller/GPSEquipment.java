@@ -100,14 +100,17 @@ public class GPSEquipment extends Thread {
 			 * 当读到数据末尾时，抛出该异常
 			 */
 			System.out.println("EOFException");
+			e.printStackTrace();
 		} catch (SocketException e) {
 			/**
 			 * 当客户端断开连接时，抛出该异常
 			 */
 			System.out.println("SocketException");
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("IOException");
+			e.printStackTrace();
 		} finally {
 			getEquipManager().deleteEquip(equip.getId());
 			this.power = false;

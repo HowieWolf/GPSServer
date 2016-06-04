@@ -21,7 +21,6 @@ public class PositionController {
 	@RequestMapping("/current")
 	@ResponseBody
 	public Position currentPosition(String eId){
-		eId = "867967020452449";
 		Position curPos = positionService.getCurPosition(eId);
 		return curPos;
 	}
@@ -29,7 +28,6 @@ public class PositionController {
 	@RequestMapping("/previous")
 	@ResponseBody
 	public List<Position> previousPosition(String eId){
-		eId = "867967020452449";
 		List<Position> prePos = positionService.getPrePositions(eId);
 		int size = prePos.size();
 		if(size == 0 || size == 1) {

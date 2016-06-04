@@ -22,6 +22,13 @@ public class Position {
 		this.speed = posCmd.getSpeed();
 		this.eId = posCmd.getIMEI();
 	}
+	
+	public boolean isTheSameLocationAs(Position pos){
+		if(this.lat==pos.getLat() && this.lng==pos.getLng()){
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {

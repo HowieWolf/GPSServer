@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -18,6 +19,14 @@ public class UserController {
 
 	@Resource
 	UserService userService;
+	
+	@RequestMapping("/getMyEquip")
+	@ResponseBody
+	public List<Equipment> getMyEquip(){
+		
+		return null;
+	}
+	
 	
 	@RequestMapping("/addEquip")
 	@ResponseBody

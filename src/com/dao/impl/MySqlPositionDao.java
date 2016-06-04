@@ -32,6 +32,12 @@ public class MySqlPositionDao extends SqlSessionDaoSupport implements PositionDa
 		return getSqlSession().selectList("selectPreviousPosition" , eId);
 	}
 	
+	@Override
+	public void updatePosition(Position pos) {
+		// TODO Auto-generated method stub
+		getSqlSession().update("updatePosition", pos);
+	}
+	
 	
 	@Resource
 	@Override

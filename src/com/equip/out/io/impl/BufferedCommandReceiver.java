@@ -27,7 +27,7 @@ public class BufferedCommandReceiver extends BufferedInputStream implements Comm
 	 */
 	@Override
 	public String readCommand() throws EOFException, IOException {
-		StringBuffer cmd = new StringBuffer();
+		StringBuffer cmd = new StringBuffer(100);
 
 		detectStart();
 		this.skip(1);

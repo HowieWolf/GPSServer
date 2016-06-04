@@ -35,6 +35,8 @@ public class DataPackageServiceImpl implements DataPackageService {
 	@Resource
 	RailDao railDao;
 
+	Position lastPosition;
+
 	@Override
 	public void handleCommand(Command cmd) {
 		System.out.println("未处理" + cmd.toCommand());
@@ -49,7 +51,15 @@ public class DataPackageServiceImpl implements DataPackageService {
 				break;
 			}
 		}
-		positionDao.addPosition(pos);
+
+		if (lastPosition == null || !lastPosition.isTheSameLocationAs(pos)) {
+			lastPosition = pos;
+			positionDao.addPosition(lastPosition);
+		} else {
+			lastPosition.setTime(pos.getTime());
+			positionDao.updatePosition(lastPosition);
+		}
+
 		System.out.println("handlePosition-->" + posCmd);
 	}
 

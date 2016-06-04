@@ -1,5 +1,7 @@
 package com.app.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,11 @@ public class SettingServiceImpl implements SettingService {
 		if(equip != null){
 			equip.addRail(rail);
 		}
+	}
+	
+	@Override
+	public List<Rail> getEquipRail(String eId){
+		return railDao.queryRails(eId);
 	}
 	
 	/* (non-Javadoc)

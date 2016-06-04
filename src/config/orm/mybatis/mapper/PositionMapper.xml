@@ -11,10 +11,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<select id="selectPreviousPosition" resultType="Position">
-		select * from position where eId = #{eId} order by time desc limit 30
+		select * from position where eId = #{eId} order by time desc limit 60
 	</select>
 	
 	<select id="selectCurrentPosition" resultType="Position">
 		select * from position where eId = #{eId} order by time desc limit 1
 	</select>
+	
+	<update id="updatePosition">
+		update position
+		set
+		time = #{time}
+		where id = #{id}
+	</update>
+	
 </mapper>
