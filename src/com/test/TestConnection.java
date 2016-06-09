@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.net.Socket;
 
 import com.equip.out.cmd.Command;
-import com.equip.out.io.impl.BufferedCommandReceiver;
+import com.equip.out.io.CommandReceiver;
 import com.equip.out.io.impl.BufferedCommandSender;
 
 public class TestConnection extends Thread{
 
-	//public static final String HOST = "123.206.30.177";
-	public static final String HOST = "localhost";
+	public static final String HOST = "123.206.30.177";
+	//public static final String HOST = "localhost";
 	
 	private String IMIE = "86796702045244";
 	
@@ -45,12 +45,12 @@ public class TestConnection extends Thread{
 	
 	@Override
 	public void run() {
-		BufferedCommandReceiver in = null;
+		CommandReceiver in = null;
 		BufferedCommandSender out = null;
 		Socket socket = null;
 		try {
 			socket = new Socket(HOST, 10000);
-			in = new BufferedCommandReceiver(socket.getInputStream());
+			in = new TestBufferedCommandReceiver(socket.getInputStream());
 			out = new BufferedCommandSender(socket.getOutputStream());
 			out.write(CMD[0].getBytes());
 			out.flush();

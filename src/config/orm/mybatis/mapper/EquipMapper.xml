@@ -5,26 +5,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="EquipMapper">
 
+<!-- 设备表相关操作 -->
 	<insert id="addEquip">
-		insert into equipment (id , phone , name , uId)
-		values (#{id},#{phone},#{name},#{uId})
+		insert into equip (IMEI , phone)
+		values (#{IMEI} , #{phone})
+	</insert>
+	
+	<select id="selectEquipByIMEI" resultType="Equip">
+		select * from equip
+		where IMEI = #{IMEI}
+	</select>
+
+	<update id="updateEquipPhone">
+		update equip
+		set
+		phone = #{phone},
+		where IMEI = #{IMEI}
+	</update>
+
+<!-- 用户添加设备表操作 -->
+	<insert id="addEquipForUser" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into equipment (eId , name , uId)
+		values
+		(#{eId},#{name},#{uId})
 	</insert>
 
-	<update id="updateEquip">
+	<update id="updateEquipForUser">
 		update equipment
 		set
 		name = #{name},
-		phone = #{phone},
-		uId = #{uId}
 		where id = #{id}
 	</update>
-	
-	<update id="updateEquipOnlyUid">
-		update equipment
-		set
-		uId = 0
+
+	<delete id="deleteEquipForUser">
+		delete from equipment
 		where id = #{id}
-	</update>
+	</delete>
 
 	<select id="selectEquipById" resultType="Equipment">
 		select * from equipment
@@ -34,6 +51,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectEquipByUid" resultType="Equipment">
 		select * from equipment
 		where uId = #{uId} order by id
+	</select>
+
+	<select id="selectEquipByUidAndEid" resultType="int">
+		select id from equipment
+		where uId = #{uId} and eId = #{eId}
 	</select>
 
 </mapper>

@@ -1,0 +1,28 @@
+一、优化了GPSEquipment和DataPackageService
+业务处理尽量放到Service中，GPSEquipment只做控制端
+
+二、重新设计了Equipment和Equip
+Equipment是用户添加设备的记录
+Equip是纯设备信息，目前只有IMEI和phone两个字段
+/**
+ * 用户添加设备的记录
+ */
+public class Equipment {
+
+	/**
+	 * id是添加记录的id，唯一标识了某用户添加了某一设备
+	 * eId是设备IMEI
+	 * uId是用户id
+	 * name是昵称字段
+	 */
+	private int id;
+	private String eId;
+	private String name;
+	private int uId;
+}
+
+三、添加设备
+一判断IMEI,二判断手机号，三判断是否用户是否已添加
+暂时未做手机号的判断，因为设备不能给出手机号信息
+
+四、修复了管理员界面设备列表

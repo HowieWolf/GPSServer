@@ -22,7 +22,7 @@ public class UserController {
 	
 	@RequestMapping("/getMyEquip")
 	@ResponseBody
-	public List<Equipment> getMyEquip(){
+	public List<Equipment> getMyEquip(int uid){
 		
 		return null;
 	}
@@ -30,12 +30,12 @@ public class UserController {
 	
 	@RequestMapping("/addEquip")
 	@ResponseBody
-	public boolean addEquip(Equipment e){
-		return userService.addEquip(e);
+	public int addEquip(Equipment e , String phone){
+		return userService.addEquip(e , phone);
 	}
 	
 	@RequestMapping("/deleteEquip")
-	public void deleteEquip(String id){
+	public void deleteEquip(int id){
 		userService.deleteEquip(id);
 	}
 	

@@ -17,10 +17,8 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.context.ContextLoader;
 
 import com.equip.in.service.DataPackageService;
-import com.equip.manager.EquipManager;
 import com.equip.out.cmd.Command;
 import com.equip.out.cmd.CommandFactory;
 import com.equip.out.cmd.receive.BootCommand;
@@ -31,7 +29,8 @@ import com.equip.out.io.CommandReceiver;
 import com.equip.out.io.CommandSender;
 import com.equip.out.io.impl.BufferedCommandReceiver;
 import com.equip.out.io.impl.BufferedCommandSender;
-import com.model.Equipment;
+import com.model.Equip;
+import com.model.Position;
 import com.model.Rail;
 
 @Scope("prototype")
@@ -44,21 +43,23 @@ public class GPSEquipment extends Thread {
 
 	private CommandFactory factory;
 	
-	private Equipment equip;
-	private ArrayList<Rail> rails;
-
-	private boolean power;
-
 	@Resource(name = "dataPackageService")
 	private DataPackageService service;
+	
+	
+	private Equip info;
+	private ArrayList<Rail> rails;
+	private boolean power;
+	private Position lastPosition;
 
 	File log;
 
 	public GPSEquipment() {
 		// TODO Auto-generated constructor stub
 		factory = new CommandFactory();
-		equip = new Equipment();
+		info = new Equip();
 		rails = new ArrayList<>();
+		lastPosition = new Position();
 	}
 
 	@Override
@@ -77,15 +78,13 @@ public class GPSEquipment extends Thread {
 				cmd = factory.createCommand(in.readCommand());
 
 				if (cmd.getDataType().equals(Command.POSITION)) {
-					service.handlePosition((PositionCommand) cmd , rails);
+					service.handlePosition((PositionCommand) cmd , lastPosition, rails);
 				} else if (cmd.getDataType().equals(Command.HEART)) {
 					service.handleHeart((HeartCommand) cmd);
 				} else if (cmd.getDataType().equals(Command.BOOT) && !power) {
 					this.power = true;
-					equip.setId(cmd.getIMEI());
-					// 交给设备管理器，存放到容器中
-					getEquipManager().addEquip(this);
-					service.handleBoot((BootCommand) cmd, out , equip , rails);
+					this.info.setIMEI(cmd.getIMEI());
+					service.handleBoot((BootCommand) cmd, this);
 				} else if (cmd.getDataType().equals(Command.DEVICE_INFO)) {
 					service.handleDeviceInfo((DeviceInfoCommand) cmd);
 				} else {
@@ -112,7 +111,7 @@ public class GPSEquipment extends Thread {
 			System.out.println("IOException");
 			e.printStackTrace();
 		} finally {
-			getEquipManager().deleteEquip(equip.getId());
+			service.handleDisconnection(info.getIMEI());
 			this.power = false;
 			try {
 				fOut.close();
@@ -135,10 +134,8 @@ public class GPSEquipment extends Thread {
 		}
 	}
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "Equip:" + equip.getId() + "----" + socket.getRemoteSocketAddress();
+	public String getRemoteAddress(){
+		return socket.getRemoteSocketAddress().toString();
 	}
 
 	private FileOutputStream createLog(FileOutputStream fOut) {
@@ -159,18 +156,18 @@ public class GPSEquipment extends Thread {
 		return fOut;
 	}
 
-	public Equipment getInfo(){
-		return equip;
-	}
-	
 	public void addRail(Rail r){
 		this.rails.add(r);
 	}
-
-	public EquipManager getEquipManager() {
-		return (EquipManager) ContextLoader.getCurrentWebApplicationContext().getBean("equipManager");
+	
+	public ArrayList<Rail> getRails() {
+		return rails;
 	}
 
+	public Equip getInfo() {
+		return info;
+	}
+	
 	public void setSocket(Socket socket) throws IOException {
 		this.socket = socket;
 		in = new BufferedCommandReceiver(socket.getInputStream());

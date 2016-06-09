@@ -10,9 +10,12 @@ public class Position {
 	private double lng;
 	private double speed;
 	private String eId;
-	private boolean inRail = true;
+	private boolean inRail;
 
 	public Position() {
+		time = "";
+		eId = "";
+		inRail = true;
 	}
 
 	public Position(PositionCommand posCmd) {

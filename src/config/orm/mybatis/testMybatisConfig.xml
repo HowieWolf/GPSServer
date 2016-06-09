@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<package name="com.model" />
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/xiaoxing" />
+				<property name="username" value="root" />
+				<property name="password" value="howie" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="config/orm/mybatis/mapper/PositionMapper.xml" />
+		<mapper resource="config/orm/mybatis/mapper/EquipMapper.xml" />
+		<mapper resource="config/orm/mybatis/mapper/RailMapper.xml" />
+		<mapper resource="config/orm/mybatis/mapper/UserMapper.xml" />
+	</mappers>
+</configuration>

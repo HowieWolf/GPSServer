@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.app.service.UserService;
 import com.dao.EquipmentDao;
 import com.dao.UserDao;
+import com.model.Equip;
 import com.model.Equipment;
 import com.model.User;
 
@@ -37,30 +38,47 @@ public class UserServiceImpl implements UserService {
 		Map<String, Object> result = new HashMap<>();
 		User query = userDao.queryUserByUsername(user.getUsername());
 		if (query == null) {
-			result.put("error", 1);
+			result.put("error", UserService.LOGIN_ERROR_USERNAME);
 		} else if (user.getPassword().equals(query.getPassword())) {
-			result.put("error", 0);
+			result.put("error", UserService.LOGIN_SUCCESS);
 			result.put("user", query);
 			result.put("equips", equipDao.queryEquipsByUid(query.getId()));
 		} else {
-			result.put("error", 2);
+			result.put("error", UserService.LOGIN_ERROR_PASSWORD);
 		}
 		return result;
 	}
-	
+
 	@Override
-	public boolean addEquip(Equipment equip) {
-		Equipment query = equipDao.queryEquipById(equip.getId());
-		if(query.getuId() > 0){
-			return false;
+	public int addEquip(Equipment equip, String phone) {
+		/**
+		 * 首先查找设备，判断是否有该设备
+		 */
+		Equip equipInfo = equipDao.queryEquipByIMEI(equip.geteId());
+		if (equipInfo == null) {
+			return UserService.ADD_ERROR_IMEI;
 		}
-		equipDao.updateEquip(equip);
-		return true;
+		/**
+		 * 判断手机号码是否正确
+		 
+		if (!equipInfo.getPhone().equals(phone)) {
+			return UserService.ADD_ERROR_PHONE;
+		}*/
+
+		/**
+		 * 判断用户是否已经添加该设备
+		 */
+		Integer id = equipDao.queryEquipByUidAndEid(equip);
+		if (id != null) {
+			return UserService.ADD_ERROR_USER;
+		}
+		equipDao.addEquipForUser(equip);
+		return UserService.ADD_SUCCESS;
 	}
-	
+
 	@Override
-	public void deleteEquip(String id) {
-		equipDao.updateEquip(id);
+	public void deleteEquip(int id) {
+		equipDao.deleteEquipForUser(id);
 	}
 
 }
