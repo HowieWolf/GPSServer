@@ -22,5 +22,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="config/orm/mybatis/mapper/EquipMapper.xml" />
 		<mapper resource="config/orm/mybatis/mapper/RailMapper.xml" />
 		<mapper resource="config/orm/mybatis/mapper/UserMapper.xml" />
+		<mapper resource="config/orm/mybatis/mapper/VersionMapper.xml" />
 	</mappers>
 </configuration>

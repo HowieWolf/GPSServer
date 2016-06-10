@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.service.SettingService;
 import com.model.Rail;
+import com.model.VersionInfo;
 
 @RequestMapping("/setting")
 @Controller
@@ -35,6 +36,12 @@ public class SettingController {
 	@ResponseBody
 	public List<Rail> getEquipRail(String eId){
 		return settingService.getEquipRail(eId);
+	}
+	
+	@RequestMapping("/checkUpdate")
+	@ResponseBody
+	public VersionInfo checkUpdate(){
+		return settingService.checkUpdate();
 	}
 	
 }

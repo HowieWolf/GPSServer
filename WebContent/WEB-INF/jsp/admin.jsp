@@ -21,19 +21,8 @@
 	<form action="equiplist.do" method="post">
 		<input type="submit" value="设备列表" />
 	</form>
-	设置IP和端口
-	<form action="iport.do" method="post">
-		ID<input type="text" name="eId" /><br>
-		IP<input type="text" name="ip" /><br>
-		port<input type="text" name="port" /><br>
-		<input type="submit" value="修改" />
-	</form>
 	
-	设置定位时间间隔
-	<form action="positionspan.do" method="post">
-		ID<input type="text" name="eId" /><br>
-		间隔<input type="text" name="span" />s<br>
-		<input type="submit" value="修改" />
-	</form>
+	<a href="upload.do">上传新版本</a>
+	
 </body>
 </html>

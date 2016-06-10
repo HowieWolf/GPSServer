@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import com.app.service.SettingService;
 import com.dao.RailDao;
+import com.dao.VersionDao;
 import com.equip.controller.GPSEquipment;
 import com.equip.manager.EquipManager;
 import com.model.Rail;
+import com.model.VersionInfo;
 
 @Repository("settingSerivce")
 public class SettingServiceImpl implements SettingService {
@@ -20,6 +22,9 @@ public class SettingServiceImpl implements SettingService {
 	
 	@Resource
 	RailDao railDao;
+	
+	@Resource
+	VersionDao versionDao;
 	
 	/* (non-Javadoc)
 	 * @see com.app.service.impl.SettingService#addRail(com.model.Rail)
@@ -44,6 +49,12 @@ public class SettingServiceImpl implements SettingService {
 	@Override
 	public void modifyRail(Rail rail){
 		
+	}
+
+	@Override
+	public VersionInfo checkUpdate() {
+		// TODO Auto-generated method stub
+		return versionDao.queryVersion();
 	}
 	
 }

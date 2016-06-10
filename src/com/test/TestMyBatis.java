@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.stereotype.Controller;
 
 import com.model.Equipment;
+import com.model.VersionInfo;
 
 @Controller
 public class TestMyBatis {
@@ -21,12 +22,7 @@ public class TestMyBatis {
 		
 		TestMyBatis test = new TestMyBatis();
 		test.connecteDatabase();
-		//test.testAddEquipForUser(test);
-		Equipment e = new Equipment();
-		e.seteId("36");
-		e.setuId(2);
-		e.setName("dasf");
-		test.testSelectEquipByUidAndEid(e);
+		test.testVersion();
 	}
 	
 	public void testSelectEquipByUidAndEid(Equipment e){
@@ -39,6 +35,10 @@ public class TestMyBatis {
 		e.setuId(2);
 		e.setName("dasf");
 		test.session.insert("addEquipForUser" , e);
+	}
+	
+	public void testVersion(){
+		VersionInfo one = session.selectOne("selectVersion");
 	}
 
 	public void connecteDatabase() throws IOException {

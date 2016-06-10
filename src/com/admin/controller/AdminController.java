@@ -50,6 +50,15 @@ public class AdminController {
 		}
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/upload")
+	public String upload(HttpSession session){
+		Boolean isLogin = (Boolean) session.getAttribute("isLogin");
+		if (isLogin != null && isLogin) {
+			return "upload";
+		}
+		return "redirect:/";
+	}
 
 	@RequestMapping("/login")
 	public String login(String pwd, HttpSession session) {
