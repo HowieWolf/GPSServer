@@ -8,7 +8,7 @@
 </head>
 <body>
 	<a href="admin.do">管理员页面</a>
-	<br>
+	<br><br>
 	<br>
 	${result}
 	<br>

@@ -81,8 +81,8 @@ public class GPSEquipment extends Thread {
 					service.handlePosition((PositionCommand) cmd , lastPosition, rails);
 				} else if (cmd.getDataType().equals(Command.HEART)) {
 					service.handleHeart((HeartCommand) cmd);
-				} else if (cmd.getDataType().equals(Command.BOOT) && !power) {
-					this.power = true;
+				} else if (cmd.getDataType().equals(Command.BOOT)) {
+					//this.power = true;
 					this.info.setIMEI(cmd.getIMEI());
 					service.handleBoot((BootCommand) cmd, this);
 				} else if (cmd.getDataType().equals(Command.DEVICE_INFO)) {
@@ -112,7 +112,7 @@ public class GPSEquipment extends Thread {
 			e.printStackTrace();
 		} finally {
 			service.handleDisconnection(info.getIMEI());
-			this.power = false;
+			//this.power = false;
 			try {
 				fOut.close();
 				((BufferedOutputStream) out).close();

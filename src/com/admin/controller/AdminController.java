@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.equip.controller.GPSEquipment;
 import com.equip.manager.EquipManager;
 import com.equip.manager.GPSServer;
-import com.equip.out.cmd.reply.SetCommand;
 import com.test.TestShowEquip;
 
 @RequestMapping("/admin")
@@ -51,8 +50,17 @@ public class AdminController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/setting")
+	public String goSetting(HttpSession session){
+		Boolean isLogin = (Boolean) session.getAttribute("isLogin");
+		if (isLogin != null && isLogin) {
+			return "setting";
+		}
+		return "redirect:/";
+	}
+	
 	@RequestMapping("/upload")
-	public String upload(HttpSession session){
+	public String goUpload(HttpSession session){
 		Boolean isLogin = (Boolean) session.getAttribute("isLogin");
 		if (isLogin != null && isLogin) {
 			return "upload";
@@ -68,24 +76,6 @@ public class AdminController {
 		} else {
 			return "redirect:/";
 		}
-	}
-
-	@RequestMapping("/iport")
-	public String iport(String eId, String ip, String port) {
-		SetCommand cmd = new SetCommand();
-		cmd.setIpAndPort(ip, port);
-		manager.get(eId).sendCommand(cmd);
-		System.out.println(cmd.toCommand());
-		return "admin";
-	}
-
-	@RequestMapping("/positionspan")
-	public String positionSpan(String eId, int span) {
-		SetCommand cmd = new SetCommand();
-		cmd.setPositonSpan(span);
-		manager.get(eId).sendCommand(cmd);
-		System.out.println(cmd.toCommand());
-		return "admin";
 	}
 
 	@RequestMapping("/equiplist")

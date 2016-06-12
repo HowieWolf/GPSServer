@@ -29,10 +29,6 @@ public class PositionController {
 	@ResponseBody
 	public List<Position> previousPosition(String eId){
 		List<Position> prePos = positionService.getPrePositions(eId);
-		int size = prePos.size();
-		if(size == 0 || size == 1) {
-			return null;
-		}
 		return prePos;
 	}
 	

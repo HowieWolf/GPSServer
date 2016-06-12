@@ -2,5 +2,4 @@
 
 
 修复历史轨迹bug
-1如果没有数据或只有一个点，则返回null
 2优化Command的toString方法

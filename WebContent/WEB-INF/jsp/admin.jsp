@@ -17,11 +17,9 @@
 	</form>
 	<br>
 	<br>
-	<br> 查看
-	<form action="equiplist.do" method="post">
-		<input type="submit" value="设备列表" />
-	</form>
-	
+	<br>
+	查看<a href="equiplist.do">设备列表</a><br/><br/>
+	<a href="setting.do" >设置</a><br/><br/>
 	<a href="upload.do">上传新版本</a>
 	
 </body>

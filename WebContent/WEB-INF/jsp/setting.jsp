@@ -7,17 +7,21 @@
 <title>Insert title here</title>
 </head>
 <body>
-	设置IP和端口
-	<form action="iport.do" method="post">
+	<a href="admin.do">管理员页面</a>
+	<br>
+	<br> 设置IP和端口
+	<form action="setting/iport.do" method="post">
 		ID<input type="text" name="eId" /><br> IP<input type="text"
 			name="ip" /><br> port<input type="text" name="port" /><br>
 		<input type="submit" value="修改" />
 	</form>
-
-	设置定位时间间隔
-	<form action="positionspan.do" method="post">
+	<br />
+	<br /> 设置定位时间间隔
+	<form action="setting/positionspan.do" method="post">
 		ID<input type="text" name="eId" /><br> 间隔<input type="text"
 			name="span" />s<br> <input type="submit" value="修改" />
 	</form>
+	<br />
+	<br />
 </body>
 </html>

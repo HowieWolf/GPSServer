@@ -24,6 +24,10 @@ public class PositionCommand extends Command {
 	public static final int LOCATE_FAIL = 3;
 	public static final int LOCATE_GSM = 4;
 
+	//handlePosition-->定位[ID:867967020135929][开机定位][经度：11703.0287][纬度：3913.9951]
+	//handlePosition-->定位[ID:867521029813968][GSM][经度：11702.5635][纬度：3914.47566]
+	//handlePosition-->定位[ID:867967020135929][GPS][经度：11703.0355][纬度：3913.9991]
+	
 	private String[] locate = { "开机定位", "GPS", "补传", "未定位", "GSM" };
 
 	// 经纬度
@@ -58,6 +62,8 @@ public class PositionCommand extends Command {
 		this.LAC = Integer.parseInt(datas[5]);
 		this.CI = Integer.parseInt(datas[6]);
 		this.locateType = Integer.parseInt(datas[7]);
+		//this.lng = Double.parseDouble(datas[8].substring(1));
+		//this.lat = Double.parseDouble(datas[9].substring(1));
 		this.lng = formateLngAndLat(datas[8]);
 		this.lat = formateLngAndLat(datas[9]);
 		// 海拔、速度、精度等尚未设置
@@ -70,14 +76,15 @@ public class PositionCommand extends Command {
 
 	public double formateLngAndLat(String arg) {
 		// 如果尚未定位，则返回0
-		if (arg.equals("EWX") || arg.equals("NSX")) {
+		if (arg==null || arg.isEmpty() || arg.equals("EWX") || arg.equals("NSX")) {
 			return 0;
 		}
 		double l = 0;
 		int d = 0;
 		double m = 0;
-		d = Integer.parseInt(arg.substring(1, arg.length() - 9));
-		m = Double.parseDouble(arg.substring(arg.length() - 9));
+		int index = arg.indexOf(".")-2;
+		d = Integer.parseInt(arg.substring(1, index));
+		m = Double.parseDouble(arg.substring(index));
 		l = d + m / 60;
 		return l;
 	}

@@ -1,0 +1,11 @@
+一、修复定位数据包获取经纬度的bug
+int index = arg.indexOf(".")-2;
+d = Integer.parseInt(arg.substring(1, index));
+m = Double.parseDouble(arg.substring(index));
+l = d + m / 60;
+
+
+二、GPSEquipment删去power控制变量，设备发送多次开机数据包，则处理多次
+
+三、优化管理员设置界面
+
